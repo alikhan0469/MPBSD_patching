@@ -1,0 +1,19 @@
+- hosts: all
+  gather_facts: false
+  become: true
+  tasks:
+    - file:
+        path: /tmp/fstab
+        state: directory
+
+    - copy:
+        src: /etc/fstab
+        dest: /tmp/fstab
+    - yum:
+        name:
+          - httpd
+          - wget
+        state: installed
+    - service:
+          name: httpd
+          state: started
